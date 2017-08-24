@@ -1,0 +1,8 @@
+  "hooks": {
+    "build": "GOOS=linux GOARCH=amd64 go build -o main main.go",
+    "clean": "rm -f main",
+    "deploy": ""
+  }
+
+
+Can we use these hooks to copy out the binary from our existing docker image?

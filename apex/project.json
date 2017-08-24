@@ -1,0 +1,9 @@
+{
+  "name": "test-apex",
+  "description": "this is a test",
+  "memory": 128,
+  "timeout": 5,
+  "role": "arn:aws:iam::566334088536:role/test-apex_lambda_function",
+  "environment": {},
+  "profile": "devalias"
+}
