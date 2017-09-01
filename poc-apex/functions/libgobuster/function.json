@@ -1,0 +1,6 @@
+{
+  "description": "PoC of libgobuster apex function on AWS lambda",
+  "runtime": "golang",
+  "memory": 128,
+  "timeout": 60
+}
