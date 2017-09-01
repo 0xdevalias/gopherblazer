@@ -3,3 +3,9 @@ Dockerfile
 gobuster-osx
 play
 TODO.txt
+
+# Resilio Sync
+*.rsls
+*.rslsd
+*.rslsc
+*.rsls*

@@ -1,5 +1,5 @@
 {
-  "description": "Testing go function",
+  "description": "PoC of gobuster apex function on AWS lambda",
   "runtime": "golang",
   "memory": 128,
   "timeout": 60
