@@ -1,0 +1,20 @@
+commands:
+  -
+    use: nmap
+    short: List the nmap version.. for now
+    long: For now, this will just list the nmap version
+    run: N/A
+    exec:
+      command: /usr/local/bin/nmap
+      args:
+        - "-V"
+  -
+    use: BBB
+    short: Some short BBB
+    long: Some long BBB
+    run: Not sure how to do this good yet..
+  -
+    use: CCC
+    short: Some short CCC
+    long: Some long CCC
+    run: Not sure how to do this good yet..
