@@ -44,3 +44,9 @@ Temporary Items
 .apdisk
 
 # End of https://www.gitignore.io/api/go,osx
+
+# Resilio Sync
+*.rsls
+*.rslsd
+*.rslsc
+*.rsls*
