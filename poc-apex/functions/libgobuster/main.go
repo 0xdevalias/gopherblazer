@@ -72,7 +72,11 @@ func sliceWordlist(wordlistFilename string, sliceStart int, sliceEnd int) (strin
 	baseNoExt := strings.TrimSuffix(base, ext)
 	newWordlistFilename := fmt.Sprintf("%s/%s-sliced-%d-%d.txt", os.TempDir(), baseNoExt, sliceStart, sliceEnd)
 
-	// TODO: check if sliced already exists, if so, fail fast
+	// If the file is already sliced, return early
+	_, err := os.Stat(newWordlistFilename)
+	if err == nil {
+		return newWordlistFilename, nil
+	}
 
 	// Open current wordlist
 	wordlist, err := os.Open(wordlistFilename)
