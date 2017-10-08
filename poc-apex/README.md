@@ -91,3 +91,8 @@ apex delete
 * https://aws.amazon.com/lambda/
 * https://aws.amazon.com/lambda/pricing/
 * http://docs.aws.amazon.com/lambda/latest/dg/limits.html
+
+## Docker Lambda
+
+* https://github.com/lambci/docker-lambda : Docker images and test runners that replicate the live AWS Lambda environment
+* `docker run -it lambci/lambda bash`
