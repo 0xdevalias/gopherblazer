@@ -3,9 +3,11 @@ package main
 import (
 	"encoding/json"
 
+	"bufio"
 	"fmt"
 	"os"
-	"os/exec"
+	"path/filepath"
+	"strings"
 
 	"github.com/OJ/gobuster/libgobuster"
 	"github.com/apex/go-apex"
@@ -53,10 +55,10 @@ func ConfigureGobuster(config *Config) (*libgobuster.State, *multierror.Error) {
 	}
 }
 
-func sliceWordlist(wordlist string, sliceStart int, sliceEnd int) (string, *multierror.Error) {
+func sliceWordlist(wordlistFilename string, sliceStart int, sliceEnd int) (string, *multierror.Error) {
 	if sliceStart < 0 || sliceEnd < 0 {
 		// Disable if either index is negative
-		return wordlist, nil
+		return wordlistFilename, nil
 	} else if sliceEnd < sliceStart {
 		// Swap the indexes if they are in the wrong order
 		temp := sliceStart
@@ -64,29 +66,51 @@ func sliceWordlist(wordlist string, sliceStart int, sliceEnd int) (string, *mult
 		sliceEnd = temp
 	}
 
-	newWordlist := fmt.Sprintf("%s-sliced-%d-%d.txt", wordlist, sliceStart, sliceEnd)
+	// Do some filename reworking
+	base := filepath.Base(wordlistFilename)
+	ext := filepath.Ext(wordlistFilename)
+	baseNoExt := strings.TrimSuffix(base, ext)
+	newWordlistFilename := fmt.Sprintf("%s/%s-sliced-%d-%d.txt", os.TempDir(), baseNoExt, sliceStart, sliceEnd)
 
-	// TODO: Check if the new wordlist slice already exists, if so, just use that
+	// TODO: check if sliced already exists, if so, fail fast
 
-	// NOTE: This is totally insecure and wide open to command injection.. but this is a PoC.. so enjoy your RCEaaS
-	totallyInsecureSliceCmd := fmt.Sprintf("X=%d; Y=%d; tail -n +$X %s | head -n $((Y-X+1)) > %s", sliceStart, sliceEnd, wordlist, newWordlist)
-	// totallyInsecureSliceCmd := fmt.Sprintf("sed -e '1,%dd;%dq' %s > %s", sliceStart, sliceEnd, wordlist, newWordlist)
-	// x := sliceStart
-	// y := sliceEnd
-	// totallyInsecureSliceCmd := fmt.Sprintf("tail -n +$%d %s | head -n $((%d-%d+1)) > %s", x, wordlist, y, x, newWordlist)
-
-	// out, err := exec.Command("bash", "-c", totallyInsecureSliceCmd).Output()
-	err := exec.Command("bash", "-c", totallyInsecureSliceCmd).Run()
+	// Open current wordlist
+	wordlist, err := os.Open(wordlistFilename)
 	if err != nil {
-		errors := multierror.Append(nil, err)
-		// errors = multierror.Append(errors, fmt.Errorf("Failed to execute slice command: %s\nOut: %s", totallyInsecureSliceCmd, out))
-		errors = multierror.Append(errors, fmt.Errorf("Failed to execute slice command: %s", totallyInsecureSliceCmd))
-		return "", errors
+		return "", multierror.Append(nil, err)
+	}
+	defer wordlist.Close()
+
+	// Open new wordlist
+	newWordlist, err := os.Create(newWordlistFilename)
+	if err != nil {
+		return "", multierror.Append(nil, err)
+	}
+	defer newWordlist.Close()
+
+	scanner := bufio.NewScanner(wordlist)
+	writer := bufio.NewWriter(newWordlist)
+
+	lineCount := 0
+	for scanner.Scan() {
+		lineCount++
+
+		if lineCount < sliceStart {
+			continue
+		} else if lineCount > sliceEnd {
+			break
+		}
+
+		fmt.Fprintln(writer, scanner.Text())
 	}
 
-	// panic("This means it worked" + string(out))
+	// Make sure buffer is flushed to underlying file
+	err = writer.Flush()
+	if err != nil {
+		return "", multierror.Append(nil, err)
+	}
 
-	return newWordlist, nil
+	return newWordlistFilename, nil
 }
 
 // type ResultStruct struct {
