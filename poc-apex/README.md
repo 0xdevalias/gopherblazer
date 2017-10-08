@@ -14,6 +14,9 @@ export AWS_PROFILE=devalias
 curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
 apex upgrade
 
+# Setup dep
+brew install dep
+
 # Init new project
 mkdir foo
 cd foo
@@ -28,15 +31,25 @@ Note: You will have to update the `role` ARN in `project.json` if you want to us
 # Create a new function
 # See http://apex.run/#structuring-functions
 
-# Deploy
+# Build/Deploy
+cd functions/libgobuster/
+dep ensure
+cd ../..
 apex deploy
 
 # List deployed functions
 apex list
 
+# Run locally (for testing)
+cd functions/libgobuster/
+go run main.go local
+go run main.go local '{"url": "http://devalias.net/", "wordlist":"words.txt"}'
+
 # Run
 apex invoke gobuster
 apex invoke libgobuster
+
+echo '{"url": "http://devalias.net/", "wordlist":"words.txt"}' | apex invoke libgobuster | jq
 
 # View logs
 apex logs gobuster
