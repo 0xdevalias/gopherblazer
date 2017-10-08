@@ -50,6 +50,7 @@ apex invoke gobuster
 apex invoke libgobuster
 
 echo '{"url": "http://devalias.net/", "wordlist":"words.txt"}' | apex invoke libgobuster | jq
+echo '{"url": "http://devalias.net/", "wordlist":"words.txt", "sliceStart": 1, "sliceEnd": 1}' | apex invoke libgobuster | jq
 
 # View logs
 apex logs gobuster

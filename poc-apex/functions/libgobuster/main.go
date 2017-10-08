@@ -5,6 +5,7 @@ import (
 
 	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/OJ/gobuster/libgobuster"
 	"github.com/apex/go-apex"
@@ -12,10 +13,12 @@ import (
 )
 
 type Config struct {
-	Url      string `json:"url"`
-	Wordlist string `json:"wordlist"`
-	Threads  int    `json:"threads"`
-	Mode     string `json:"mode"`
+	Url        string `json:"url"`
+	Wordlist   string `json:"wordlist"`
+	SliceStart int    `json:"sliceStart"`
+	SliceEnd   int    `json:"sliceEnd"`
+	Threads    int    `json:"threads"`
+	Mode       string `json:"mode"`
 }
 
 func ConfigureGobuster(config *Config) (*libgobuster.State, *multierror.Error) {
@@ -38,8 +41,52 @@ func ConfigureGobuster(config *Config) (*libgobuster.State, *multierror.Error) {
 	if err := libgobuster.ValidateState(&s, extensions, codes, proxy); err.ErrorOrNil() != nil {
 		return nil, err
 	} else {
+		// Slice the wordlist after we've validated it exists
+		newWordlist, err := sliceWordlist(config.Wordlist, config.SliceStart, config.SliceEnd)
+		if err.ErrorOrNil() != nil {
+			return nil, err
+		}
+
+		s.Wordlist = newWordlist
+
 		return &s, nil
 	}
+}
+
+func sliceWordlist(wordlist string, sliceStart int, sliceEnd int) (string, *multierror.Error) {
+	if sliceStart < 0 || sliceEnd < 0 {
+		// Disable if either index is negative
+		return wordlist, nil
+	} else if sliceEnd < sliceStart {
+		// Swap the indexes if they are in the wrong order
+		temp := sliceStart
+		sliceStart = sliceEnd
+		sliceEnd = temp
+	}
+
+	newWordlist := fmt.Sprintf("%s-sliced-%d-%d.txt", wordlist, sliceStart, sliceEnd)
+
+	// TODO: Check if the new wordlist slice already exists, if so, just use that
+
+	// NOTE: This is totally insecure and wide open to command injection.. but this is a PoC.. so enjoy your RCEaaS
+	totallyInsecureSliceCmd := fmt.Sprintf("X=%d; Y=%d; tail -n +$X %s | head -n $((Y-X+1)) > %s", sliceStart, sliceEnd, wordlist, newWordlist)
+	// totallyInsecureSliceCmd := fmt.Sprintf("sed -e '1,%dd;%dq' %s > %s", sliceStart, sliceEnd, wordlist, newWordlist)
+	// x := sliceStart
+	// y := sliceEnd
+	// totallyInsecureSliceCmd := fmt.Sprintf("tail -n +$%d %s | head -n $((%d-%d+1)) > %s", x, wordlist, y, x, newWordlist)
+
+	// out, err := exec.Command("bash", "-c", totallyInsecureSliceCmd).Output()
+	err := exec.Command("bash", "-c", totallyInsecureSliceCmd).Run()
+	if err != nil {
+		errors := multierror.Append(nil, err)
+		// errors = multierror.Append(errors, fmt.Errorf("Failed to execute slice command: %s\nOut: %s", totallyInsecureSliceCmd, out))
+		errors = multierror.Append(errors, fmt.Errorf("Failed to execute slice command: %s", totallyInsecureSliceCmd))
+		return "", errors
+	}
+
+	// panic("This means it worked" + string(out))
+
+	return newWordlist, nil
 }
 
 // type ResultStruct struct {
@@ -62,10 +109,12 @@ func event2str(event json.RawMessage) string {
 
 func event2config(event json.RawMessage) (*Config, error) {
 	config := Config{
-		Url:      "http://devalias.net/",
-		Wordlist: "words.txt",
-		Threads:  10,
-		Mode:     "dir",
+		Url:        "http://devalias.net/",
+		Wordlist:   "words.txt",
+		SliceStart: -1,
+		SliceEnd:   -1,
+		Threads:    10,
+		Mode:       "dir",
 	}
 
 	err := json.Unmarshal(event, &config)
