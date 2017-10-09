@@ -58,6 +58,14 @@ apex logs libgobuster
 
 # View metrics/costs
 apex metrics --since 8760h
+
+# Advanced Usage
+
+# Create some sample files to match on our test bucket
+./make-sample-files.sh
+
+# Example of slicing a dictionary across multiple calls
+./invoke-multi.sh
 ```
 
 ## Destroy
@@ -80,6 +88,8 @@ apex delete
 ## Future Improvements
 
 * Do we need to use Apex? Could probably build our own more lightweight system around this, build in docker containers, export artificats, etc. I believe there are some really good shims out there..
+* Apex uses STDOUT for control, so sometimes it breaks if random things are printed to STDOUT that it doesn't expect.
+    * Some parts of libgobuster have been updated to address this, but not all. Eg. if you hit a 'wildcard redirect' it will break currently, with no useful log messages in `apex logs` aside from `SyntaxError: Unexpected token ]`
 
 ## Apex
 
@@ -96,3 +106,25 @@ apex delete
 
 * https://github.com/lambci/docker-lambda : Docker images and test runners that replicate the live AWS Lambda environment
 * `docker run -it lambci/lambda bash`
+
+## S3 Bucket Policy
+
+The following policy allows the files uploaded by `./make-sample-files.sh` to be accessed by anyone.
+
+```
+{
+  "Id": "Policy1507512286573",
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "Stmt1507512284907",
+      "Action": [
+        "s3:GetObject"
+      ],
+      "Effect": "Allow",
+      "Resource": "arn:aws:s3:::gopherblazer-test-discovery/*",
+      "Principal": "*"
+    }
+  ]
+}
+```
