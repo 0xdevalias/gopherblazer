@@ -5,8 +5,8 @@ DEFAULT_DICT="words.txt"
 DEFAULT_THREADS=10
 
 URL=${1:-$DEFAULT_URL}
-DICT=${1:-$DEFAULT_DICT}
-THREADS=${1:-$DEFAULT_THREADS}
+DICT=${2:-$DEFAULT_DICT}
+THREADS=${3:-$DEFAULT_THREADS}
 
 function jsonTemplate {
   echo "{\"url\": \"$URL\", \"wordlist\":\"$DICT\", \"threads\": $THREADS, \"sliceStart\": $1, \"sliceEnd\": $2}"
