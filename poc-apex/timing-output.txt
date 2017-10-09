@@ -1,0 +1,64 @@
+⇒  time gobuster -u http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ -w ./functions/libgobuster/big.txt -t 10
+gobuster -u  -w ./functions/libgobuster/big.txt -t 10  9.45s user 13.48s system 9% cpu 4:01.12 total
+
+⇒  time gobuster -u http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ -w ./functions/libgobuster/big.txt -t 100
+gobuster -u  -w ./functions/libgobuster/big.txt -t 100  5.53s user 6.36s system 7% cpu 2:35.03 total
+
+----
+
+dirbusted the big.txt wordlist (20469 lines) across 11 lambda invocations with 100 threads each in 9sec with 100% accuracy.
+  ⇒  ./invoke-multi.sh http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ big.txt 100
+
+  real  0m9.729s
+  user  0m1.044s
+  sys 0m0.484s
+
+----
+
+# Some short timing tests using 11 lambda invocations
+
+⇒ time ./invoke-multi.sh http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ big.txt 10
+./invoke-multi.sh  big.txt 10  1.14s user 0.41s system 13% cpu 11.705 total
+
+⇒ time ./invoke-multi.sh http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ big.txt 100
+./invoke-multi.sh  big.txt 100  1.13s user 0.32s system 15% cpu 9.611 total
+
+⇒  time ./invoke-multi.sh http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ big.txt 500
+./invoke-multi.sh  big.txt 500  1.04s user 0.40s system 10% cpu 13.480 total
+./invoke-multi.sh  big.txt 500  1.13s user 0.42s system 14% cpu 10.629 total
+
+⇒  time ./invoke-multi.sh http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ big.txt 1000
+./invoke-multi.sh  big.txt 1000  1.10s user 0.48s system 16% cpu 9.482 total
+
+----
+
+# Some short timing tests using 20 lambda invocations
+
+⇒  time ./invoke-multi.sh http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ big.txt 10
+./invoke-multi.sh  big.txt 10  2.18s user 0.87s system 22% cpu 13.779 total
+
+⇒  time ./invoke-multi.sh http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ big.txt 100
+./invoke-multi.sh  big.txt 100  2.05s user 0.55s system 32% cpu 7.938 total
+
+⇒  time ./invoke-multi.sh http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ big.txt 500
+./invoke-multi.sh  big.txt 500  2.19s user 0.58s system 44% cpu 6.240 total
+
+⇒  time ./invoke-multi.sh http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ big.txt 1000
+   ⨯ Error: function response: 2017-10-09T02:20:12.093Z 3d3e2a03-ac98-11e7-bd27-3bf8bc8630cc Task timed out after 60.02 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.198Z 3d4c3374-ac98-11e7-a8c5-a95919c42833 Task timed out after 60.04 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.209Z 3d4aad48-ac98-11e7-a953-775907a11d63 Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.217Z 3d4b49ac-ac98-11e7-9cb7-dff357fe141b Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.245Z 3d50ee60-ac98-11e7-befb-1ffe0cec734b Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.261Z 3d507990-ac98-11e7-bb6b-991164a78a1e Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.293Z 3d577e68-ac98-11e7-8d50-87d36fa4d996 Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.337Z 3d5e0e8c-ac98-11e7-880c-173595858852 Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.349Z 3d607eec-ac98-11e7-95dc-71bb141b3b62 Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.385Z 3d6539b1-ac98-11e7-907f-01918864a625 Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.429Z 3d6bc965-ac98-11e7-bce3-9761c53ffa68 Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.435Z 3d6d2929-ac98-11e7-9327-ed64e168e5c6 Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.441Z 3d6ed724-ac98-11e7-bae6-f7ccc7712685 Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.449Z 3d6f73ba-ac98-11e7-b289-b97b385b5a93 Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.453Z 3d6f9a36-ac98-11e7-b214-71c34b84f03e Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.461Z 3d71bd64-ac98-11e7-8c1e-1d6867e2f7b6 Task timed out after 60.06 seconds
+   ⨯ Error: function response: 2017-10-09T02:20:12.570Z 3d819ba5-ac98-11e7-b495-81ccf8f4f941 Task timed out after 60.06 seconds
+./invoke-multi.sh  big.txt 1000  2.16s user 0.67s system 4% cpu 1:01.77 total
