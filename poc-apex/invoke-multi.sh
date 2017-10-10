@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEFAULT_URL="http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/"
+DEFAULT_URL="http://test-discovery.gopherblazer.devalias.net"
 DEFAULT_DICT="words.txt"
 DEFAULT_THREADS=10
 
