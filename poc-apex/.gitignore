@@ -1,7 +1,8 @@
 # Apex
-
 functions/gobuster/main
 
 # https://github.com/golang/dep
-
 functions/*/vendor/
+
+# Etc
+discoveryFiles/
