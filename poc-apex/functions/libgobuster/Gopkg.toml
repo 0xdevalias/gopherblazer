@@ -5,3 +5,7 @@
   name = "github.com/OJ/gobuster"
   source = "github.com/alias1/gobuster"
   branch = "run-from-code"
+
+[[constraint]]
+  name = "github.com/apex/go-apex"
+  version = "1.0.0"

@@ -9,10 +9,10 @@
   source = "github.com/alias1/gobuster"
 
 [[projects]]
-  branch = "master"
   name = "github.com/apex/go-apex"
   packages = ["."]
-  revision = "6e19883b04761c5930e32bf2f80e02ad0e3a1d4e"
+  revision = "338ee0137bc07a472789968021e66c5df905fc26"
+  version = "v1.0.0"
 
 [[projects]]
   branch = "master"
@@ -47,6 +47,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "930be6b98eb85ec1428304e92fedd8f5c85b9e38076179a14912cd5e0aca2602"
+  inputs-digest = "2903600c22eca2f0014614451b96d9c46bc7c958bac57addcd72fb1b4633f84b"
   solver-name = "gps-cdcl"
   solver-version = 1
