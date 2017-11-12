@@ -1,3 +1,223 @@
+Using the new invoke-multi.sh
+
+# local, 10 gobuster threads (10 units)
+time gobuster -u "http://test-discovery.gopherblazer.devalias.net" -w ./functions/libgobuster/big.txt -t 100
+  Run 1: 10.56s user 11.56s system 10% cpu 3:23.78 total
+
+# local, 100 gobuster threads (100 units)
+time gobuster -u "http://test-discovery.gopherblazer.devalias.net" -w ./functions/libgobuster/big.txt -t 100
+  Run 1: 7.23s user 6.53s system 14% cpu 1:37.84 total
+
+# local, 1000 gobuster threads (1000 units)
+time gobuster -u "http://test-discovery.gopherblazer.devalias.net" -w ./functions/libgobuster/big.txt -t 1000
+  Run 1: 6.84s user 13.87s system 39% cpu 51.815 total
+  Run 2: 7.59s user 5.80s system 5% cpu 4:11.99 total
+  Run 3: 6.81s user 17.26s system 22% cpu 1:45.88 total
+  Run 4: 5.17s user 14.87s system 23% cpu 1:26.58 total
+  Run 5: 6.85s user 4.55s system 12% cpu 1:34.68 total
+
+# vultr, 10 gobuster threads (10 units)
+time gobuster -u "http://test-discovery.gopherblazer.devalias.net" -w ~/sec/seclists/Discovery/Web_Content/big.txt -t 10
+  Run 1: real 1m4.106s user 0m6.812s sys 0m7.813s
+  Run 2: real 1m31.947s user 0m6.965s sys 0m7.789s
+  Run 3: real 2m40.797s user 0m7.446s sys 0m8.139s
+  Run 4: real 1m58.964s user 0m7.624s sys 0m8.546s
+  Run 5: real 1m58.096s user 0m7.754s sys 0m8.620s
+
+# vultr, 100 gobuster threads (100 units)
+time gobuster -u "http://test-discovery.gopherblazer.devalias.net" -w ~/sec/seclists/Discovery/Web_Content/big.txt -t 100
+  Run 1: real 0m27.886s user 0m4.957s sys 0m4.804s
+  Run 2: real 0m32.194s user 0m4.973s sys 0m4.891s
+  Run 3: real 0m38.352s user 0m4.681s sys 0m4.670s
+  Run 4: real 0m40.240s user 0m4.950s sys 0m4.945s
+  Run 5: real 0m44.485s user 0m3.333s sys 0m3.097s
+
+# vultr, 1000 gobuster threads (1000 units)
+time gobuster -u "http://test-discovery.gopherblazer.devalias.net" -w ~/sec/seclists/Discovery/Web_Content/big.txt -t 1000
+  Run 1: real 0m28.936s user  0m3.248s sys 0m1.270s
+
+# 1 lambda slice, 10 gobuster threads (10 units)
+./invoke-multi.sh 1 "http://test-discovery.gopherblazer.devalias.net" big.txt 10
+  Run 1: real 1m41.115s user 0m0.099s sys 0m0.035s
+  Run 2: real 2m11.488s user 0m0.096s sys 0m0.032s
+  Run 3: real 1m34.413s user 0m0.089s sys 0m0.032s
+  Run 4: real 2m5.928s  user 0m0.099s sys 0m0.042s
+  Run 5: real 1m52.123s user 0m0.092s sys 0m0.044s
+
+# 1 lambda slice, 100 gobuster threads (100 units)
+./invoke-multi.sh 1 "http://test-discovery.gopherblazer.devalias.net" big.txt 100
+  Run 1: real 0m49.258s user 0m0.094s sys 0m0.033s
+  Run 2: real 0m49.287s user 0m0.092s sys 0m0.031s
+  Run 3: real 0m51.080s user 0m0.093s sys 0m0.035s
+  Run 4: real 0m52.690s user 0m0.104s sys 0m0.047s
+  Run 5: real 0m55.539s user 0m0.093s sys 0m0.031s
+
+# 1 lambda slice, 1000 gobuster threads (1000 units)
+./invoke-multi.sh 1 "http://test-discovery.gopherblazer.devalias.net" big.txt 1000
+  Run 1: real 0m57.796s user 0m0.095s sys 0m0.039s
+  Run 2: real 1m4.665s user 0m0.095s sys 0m0.036s
+  Run 3: real 1m0.090s user 0m0.095s sys 0m0.031s
+  Run 4: real 1m4.403s user 0m0.092s sys 0m0.031s
+  Run 5: real 1m2.397s user 0m0.091s sys 0m0.034s
+
+# 10 lambda slice, 10 gobuster threads (100 units)
+./invoke-multi.sh 10 "http://test-discovery.gopherblazer.devalias.net" big.txt 10
+  Run 1: real 0m14.894s user 0m1.336s sys 0m0.303s
+  Run 2: real  0m15.598s user 0m1.301s sys 0m0.311s
+  Run 3: real  0m15.924s user 0m1.307s sys 0m0.305s
+  Run 4: real  0m14.236s user 0m1.311s sys 0m0.318s
+  Run 5: real  0m15.035s user 0m1.330s sys 0m0.331s
+
+# 10 lambda slice, 100 gobuster threads (1000 units)
+./invoke-multi.sh 10 "http://test-discovery.gopherblazer.devalias.net" big.txt 100
+  Run 1: real 0m8.847s user 0m1.319s sys 0m0.349s
+  Run 2: real 0m7.943s user 0m1.333s sys 0m0.324s
+  Run 3: real 0m14.997s user 0m1.314s sys 0m0.307s
+  Run 4: real 0m9.380s user 0m1.350s sys 0m0.348s
+  Run 5: real 0m10.255s user 0m1.342s sys 0m0.337s
+
+# 10 lambda slice, 1000 gobuster threads (10000 units)
+./invoke-multi.sh 10 "http://test-discovery.gopherblazer.devalias.net" big.txt 1000
+  Run 1: real 0m9.572s user 0m1.354s sys 0m0.352s
+  Run 2: real 0m9.315s user 0m1.334s sys 0m0.319s
+  Run 3: real 0m8.883s user 0m1.306s sys 0m0.295s
+  Run 4: real 0m10.292s user 0m1.328s sys 0m0.313s
+  Run 5: real 0m10.360s user 0m1.367s sys 0m0.328s
+
+# 20 lambda slice, 10 gobuster threads (2000 units)
+./invoke-multi.sh 20 "http://test-discovery.gopherblazer.devalias.net" big.txt 10
+  Run 1: real 0m7.222s user 0m2.751s sys 0m0.682s
+  Run 2: real 0m8.598s user 0m2.727s sys 0m0.703s
+  Run 3: real 0m9.436s user 0m2.683s sys 0m0.656s
+  Run 4: real 0m9.611s user 0m2.686s sys 0m0.642s
+  Run 5: real 0m7.875s user 0m2.654s sys 0m0.626s
+
+# 20 lambda slice, 100 gobuster threads (20000 units)
+./invoke-multi.sh 20 "http://test-discovery.gopherblazer.devalias.net" big.txt 100
+  Run 1: real 0m6.130s user 0m2.790s sys 0m0.673s
+  Run 2: real 0m5.488s user 0m2.710s sys 0m0.641s
+  Run 3: real 0m5.077s user 0m2.672s sys 0m0.633s
+  Run 4: real 0m5.132s user 0m2.687s sys 0m0.637s
+  Run 5: real 0m5.289s user  0m2.716s sys 0m0.606s
+
+# 20 lambda slice, 1000 gobuster threads (200000 units)
+./invoke-multi.sh 20 "http://test-discovery.gopherblazer.devalias.net" big.txt 1000
+  Run 1: real 0m6.338s user 0m2.679s sys 0m0.670s
+  Run 2: real 0m7.218s user 0m2.710s sys 0m0.634s
+  Run 3: real 0m5.494s user 0m2.713s sys 0m0.645s
+  Run 4: real 0m5.843s user 0m2.706s sys 0m0.648s
+  Run 5: real 0m5.889s user 0m2.738s sys 0m0.657s
+
+# 50 lambda slice, 10 gobuster threads (500 units)
+./invoke-multi.sh 50 "http://test-discovery.gopherblazer.devalias.net" big.txt 10
+  Run 1: real 0m7.222s user 0m6.817s sys 0m1.589s
+  Run 2: real 0m6.425s user 0m6.842s sys 0m1.585s
+  Run 3: real 0m6.527s user 0m6.868s sys 0m1.599s
+  Run 4: real 0m6.445s user 0m6.842s sys 0m1.593s
+  Run 5: real 0m6.162s user 0m6.710s sys 0m1.546s
+
+# 50 lambda slice, 100 gobuster threads (5000 units)
+./invoke-multi.sh 50 "http://test-discovery.gopherblazer.devalias.net" big.txt 100
+  Run 1: real 0m3.720s user  0m6.793s sys 0m1.535s
+  Run 2: real 0m4.268s user 0m7.035s sys 0m1.598s
+  Run 3: real 0m3.947s user 0m7.087s sys 0m1.610s
+  Run 4: real 0m4.688s user 0m6.909s sys 0m1.583s
+  Run 5: real 0m7.856s user 0m6.854s sys 0m1.594s
+
+# 50 lambda slice, 1000 gobuster threads (50000 units)
+./invoke-multi.sh 50 "http://test-discovery.gopherblazer.devalias.net" big.txt 1000
+  Run 1: real 0m7.086s user 0m6.799s sys 0m1.589s
+  Run 2: real 0m6.107s user 0m6.875s sys 0m1.621s
+  Run 3: real 0m5.641s user 0m6.782s sys 0m1.612s
+  Run 4: real 0m5.649s user 0m6.812s sys 0m1.612s
+  Run 5: real 0m5.793s user 0m6.849s sys 0m1.634s
+
+# 100 lambda slice, 10 gobuster threads (1000 units)
+./invoke-multi.sh 100 "http://test-discovery.gopherblazer.devalias.net" big.txt 10
+  Run 1: real 0m9.072s user 0m13.617s sys 0m3.415s
+  Run 2: real 0m6.104s user 0m13.656s sys 0m3.250s
+  Run 3: real 0m8.274s user 0m13.579s sys 0m3.191s
+  Run 4: real 0m6.283s user 0m13.572s sys 0m3.236s
+  Run 5: real 0m6.497s user 0m13.739s sys 0m3.300s
+
+# 100 lambda slice, 100 gobuster threads (10000 units)
+./invoke-multi.sh 100 "http://test-discovery.gopherblazer.devalias.net" big.txt 100
+  Run 1: real 0m6.401s user 0m13.568s sys 0m3.222s
+  Run 2: real 0m4.426s user 0m13.517s sys 0m3.193s
+  Run 3: real 0m4.069s user 0m13.520s sys 0m3.191s
+  Run 4: real 0m4.676s user 0m13.599s sys 0m3.241s
+  Run 5: real 0m7.427s user 0m13.617s sys 0m3.244s
+
+# 100 lambda slice, 1000 gobuster threads (100000 units)
+./invoke-multi.sh 100 "http://test-discovery.gopherblazer.devalias.net" big.txt 1000
+  Run 1: real 0m6.868s user 0m13.671s sys 0m3.152s
+  Run 2: real 0m4.903s user 0m13.723s sys 0m3.143s
+  Run 3: real 0m4.146s user 0m14.106s sys 0m3.175s
+  Run 4: real 0m4.198s user 0m14.451s sys 0m3.211s
+  Run 5: real 0m6.213s user  0m14.569s sys 0m3.212s
+
+# 250 lambda slice, 10 gobuster threads (2500 units)
+./invoke-multi.sh 250 "http://test-discovery.gopherblazer.devalias.net" big.txt 10
+  Run 1: real 0m9.094s user 0m34.295s sys 0m8.075s
+  Run 2: real 0m10.559s user 0m36.346s sys 0m8.299s
+  Run 3: real 0m9.280s user 0m37.217s sys 0m8.364s
+  Run 4: real 0m9.715s user 0m36.890s sys 0m8.416s
+  Run 5: real 0m8.257s user 0m35.139s sys 0m7.924s
+
+# 250 lambda slice, 100 gobuster threads (25000 units)
+./invoke-multi.sh 250 "http://test-discovery.gopherblazer.devalias.net" big.txt 100
+  Run 1: real 0m7.600s user 0m34.193s sys 0m8.043s
+  Run 2: real 0m7.791s user 0m34.616s sys 0m7.920s
+  Run 3: real 0m7.851s user 0m35.321s sys 0m7.983s
+  Run 4: real 0m14.505s user 0m35.987s sys 0m8.127s
+  Run 5: real 0m9.403s user 0m34.488s sys 0m7.938s
+
+# 250 lambda slice, 1000 gobuster threads (250000 units)
+./invoke-multi.sh 250 "http://test-discovery.gopherblazer.devalias.net" big.txt 1000
+  Run 1: real 0m7.713s user 0m34.257s sys 0m7.807s
+  Run 2: real 0m8.275s user 0m34.589s sys 0m8.160s
+  Run 3: real 0m7.605s user 0m34.949s sys 0m7.977s
+  Run 4: real 0m10.340s user 0m35.637s sys 0m8.018s
+  Run 5: real 0m9.393s user  0m35.273s sys 0m8.006s
+
+# 500 lambda slice, 10 gobuster threads (5000 units)
+./invoke-multi.sh 500 "http://test-discovery.gopherblazer.devalias.net" big.txt 10
+  Run 1: real 0m15.885s user 1m11.910s sys 0m17.217s
+  Run 2: real 0m15.155s user 1m10.993s sys 0m16.191s
+  Run 3: real 0m16.954s user 1m12.238s sys 0m16.924s
+  Run 4: real 0m15.804s user 1m12.539s sys 0m16.794s
+  Run 5: real 0m16.866s user 1m10.012s sys 0m16.438s
+
+# 500 lambda slice, 100 gobuster threads (50000 units)
+./invoke-multi.sh 500 "http://test-discovery.gopherblazer.devalias.net" big.txt 100
+  Run 1: real 0m14.521s user 1m10.598s sys 0m16.322s
+  Run 2: real 0m14.816s user 1m13.675s sys 0m16.935s
+  Run 3: real 0m14.304s user 1m11.252s sys 0m16.153s
+  Run 4: real 0m16.857s user 1m13.787s sys 0m16.735s
+  Run 5: real 0m15.087s user 1m10.847s sys 0m16.119s
+
+# 500 lambda slice, 1000 gobuster threads (500000 units)
+./invoke-multi.sh 500 "http://test-discovery.gopherblazer.devalias.net" big.txt 1000
+  Run 1: real 0m16.175s user  1m10.675s sys 0m16.106s
+
+# 1000 lambda slice, 10 gobuster threads (10000 units)
+./invoke-multi.sh 1000 "http://test-discovery.gopherblazer.devalias.net" big.txt 10
+  Run 1: real 0m31.661s user 2m30.767s sys 0m34.624s
+  This had way too much local system overhead to seem worthwhile, didn't test more
+
+# 1000 lambda slice, 100 gobuster threads (100000 units)
+./invoke-multi.sh 1000 "http://test-discovery.gopherblazer.devalias.net" big.txt 100
+  Run 1: real 0m31.387s user 2m37.791s sys 0m35.583s
+  Run 2: real 0m30.022s user 2m28.265s sys 0m33.890s
+
+# 1000 lambda slice, 1000 gobuster threads (1000000 units)
+./invoke-multi.sh 1000 "http://test-discovery.gopherblazer.devalias.net" big.txt 1000
+  Run 1: real 0m30.685s user 2m25.985s sys 0m33.963s
+
+----
+Old Data from old scripts below here..
+----
+
 ⇒  time gobuster -u http://gopherblazer-test-discovery.s3-ap-southeast-2.amazonaws.com/ -w ./functions/libgobuster/big.txt -t 10
 gobuster -u  -w ./functions/libgobuster/big.txt -t 10  9.45s user 13.48s system 9% cpu 4:01.12 total
 
