@@ -28,13 +28,14 @@ Note: You will have to update the `role` ARN in `project.json` if you want to us
 ## Usage
 
 ```
+export AWS_PROFILE=devalias
+
 # Create a new function
 # See http://apex.run/#structuring-functions
 
 # Build/Deploy
-cd functions/libgobuster/
-dep ensure
-cd ../..
+cd functions/gobuster/ && dep ensure && cd ../..
+cd functions/libgobuster/ && dep ensure && cd ../..
 apex deploy
 
 # List deployed functions
