@@ -9,6 +9,7 @@ PoC showing an [Apex](http://apex.run/) function that directly uses `gobuster`/`
 
 ```
 export AWS_PROFILE=devalias
+export AWS_REGION=ap-southeast-2
 
 # Setup Apex
 curl https://raw.githubusercontent.com/apex/apex/master/install.sh | sh
@@ -29,6 +30,7 @@ Note: You will have to update the `role` ARN in `project.json` if you want to us
 
 ```
 export AWS_PROFILE=devalias
+export AWS_REGION=ap-southeast-2
 
 # Create a new function
 # See http://apex.run/#structuring-functions
