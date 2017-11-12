@@ -58,6 +58,7 @@ func ConfigureGobuster(config *Config) (*libgobuster.State, *multierror.Error) {
 func sliceWordlist(wordlistFilename string, sliceStart int, sliceEnd int) (string, *multierror.Error) {
 	if sliceStart < 0 || sliceEnd < 0 {
 		// Disable if either index is negative
+		// TODO: Maybe slicing to -1 should go to the end of the file..?
 		return wordlistFilename, nil
 	} else if sliceEnd < sliceStart {
 		// Swap the indexes if they are in the wrong order
@@ -97,15 +98,17 @@ func sliceWordlist(wordlistFilename string, sliceStart int, sliceEnd int) (strin
 
 	lineCount := 0
 	for scanner.Scan() {
-		lineCount++
-
 		if lineCount < sliceStart {
+			// Don't start yet
+			lineCount++
 			continue
 		} else if lineCount > sliceEnd {
+			// We're finished
 			break
 		}
 
 		fmt.Fprintln(writer, scanner.Text())
+		lineCount++
 	}
 
 	// Make sure buffer is flushed to underlying file
