@@ -140,7 +140,7 @@ func event2str(event json.RawMessage) string {
 
 func event2config(event json.RawMessage) (*Config, error) {
 	config := Config{
-		Url:        "http://devalias.net/",
+		Url:        "http://test-discovery.gopherblazer.devalias.net",
 		Wordlist:   "words.txt",
 		SliceStart: -1,
 		SliceEnd:   -1,

@@ -46,14 +46,14 @@ apex list
 # Run locally (for testing)
 cd functions/libgobuster/
 go run main.go local
-go run main.go local '{"url": "http://devalias.net/", "wordlist":"words.txt"}'
+go run main.go local '{"url": "http://test-discovery.gopherblazer.devalias.net", "wordlist":"words.txt"}'
 
 # Run
 apex invoke gobuster
 apex invoke libgobuster
 
-echo '{"url": "http://devalias.net/", "wordlist":"words.txt"}' | apex invoke libgobuster | jq
-echo '{"url": "http://devalias.net/", "wordlist":"words.txt", "sliceStart": 1, "sliceEnd": 1}' | apex invoke libgobuster | jq
+echo '{"url": "http://test-discovery.gopherblazer.devalias.net", "wordlist":"words.txt"}' | apex invoke libgobuster | jq
+echo '{"url": "http://test-discovery.gopherblazer.devalias.net", "wordlist":"words.txt", "sliceStart": 1, "sliceEnd": 1}' | apex invoke libgobuster | jq
 
 # View logs
 apex logs gobuster

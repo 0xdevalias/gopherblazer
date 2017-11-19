@@ -46,7 +46,7 @@ func gobuster(url string) (string, error) {
 func main() {
   apex.HandleFunc(func(event json.RawMessage, ctx *apex.Context) (interface{}, error) {
 
-    out, err := gobuster("http://devalias.net")
+    out, err := gobuster("http://test-discovery.gopherblazer.devalias.net")
     // var m message
     // foo := "This is a foo"
 
