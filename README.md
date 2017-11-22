@@ -4,9 +4,9 @@ Thy blazing cometh..
 
 ## PoCs
 
-* [poc-apex](https://github.com/0xdevalias/gopherblazer/tree/poc-apex)
+* [poc-apex](https://github.com/0xdevalias/gopherblazer/tree/poc-apex/poc-apex)
     * Slicing wordlists and running gobuster on AWS Lambda in parallel (with Apex)
-* [poc-cli](https://github.com/0xdevalias/gopherblazer/tree/poc-cli)
+* [poc-cli](https://github.com/0xdevalias/gopherblazer/tree/poc-cli/poc-cli)
     * Creating a CLI program in Go that dynamically loads sub-commands from a YAML configuration file.
 
 ## About Me
