@@ -20,6 +20,8 @@ cobra add bar
 ## Usage
 
 ```
+cd ./blaze/
+dep ensure
 go run main.go
 ```
 
