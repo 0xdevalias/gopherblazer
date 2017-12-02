@@ -24,4 +24,4 @@ Thy blazing cometh..
 * [BSides Wellington 2017](https://www.bsides.nz/) (November 23-24th, 2017; Wellington, New Zealand)
     * [Speaker: Glenn 'devalias' Grant](https://bsideswellington2017.sched.com/speaker/glenndevaliasgrant)
     * ["Gophers, whales and.. clouds? Oh my!"](https://bsideswellington2017.sched.com/event/CTpF/gophers-whales-and-clouds-oh-my)
-    * [Slides](slides/20171123-Gopherblazer-BSidesWellington.pdf)
+    * Slides: [PDF](slides/20171123-Gopherblazer-BSidesWellington.pdf), [SpeakerDeck](https://speakerdeck.com/0xdevalias/gophers-whales-and-dot-clouds-oh-my), [SlideShare](https://www.slideshare.net/GlenndevaliasGrant/gophers-whales-and-clouds-oh-my)
