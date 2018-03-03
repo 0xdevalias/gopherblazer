@@ -25,3 +25,6 @@ Thy blazing cometh..
     * [Speaker: Glenn 'devalias' Grant](https://bsideswellington2017.sched.com/speaker/glenndevaliasgrant)
     * ["Gophers, whales and.. clouds? Oh my!"](https://bsideswellington2017.sched.com/event/CTpF/gophers-whales-and-clouds-oh-my)
     * Slides: [PDF](slides/20171123-Gopherblazer-BSidesWellington.pdf), [SpeakerDeck](https://speakerdeck.com/0xdevalias/gophers-whales-and-dot-clouds-oh-my), [SlideShare](https://www.slideshare.net/GlenndevaliasGrant/gophers-whales-and-clouds-oh-my)
+    * YouTube: [0xdevalias's Channel](https://www.youtube.com/watch?v=Y2W-Kw24Zpg), [BSides Wellington's Channel (original)](https://www.youtube.com/watch?v=adWzygDdQLw)
+
+[![YouTube: BsidesWLG 2017 - Glenn 'devalias' Grant - Gophers, whales and.. clouds? Oh my!](http://img.youtube.com/vi/Y2W-Kw24Zpg/0.jpg)](https://www.youtube.com/watch?v=Y2W-Kw24Zpg)
